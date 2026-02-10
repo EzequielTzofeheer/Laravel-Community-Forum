@@ -2,15 +2,17 @@
 
 namespace Database\Factories;
 
-use App\Models\{Category, Question, User,};
+use App\Models\ReplyQuestion;
+use App\Models\Question;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Factory>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\ReplyQuestion>
  */
-class QuestionFactory extends Factory
+class ReplyQuestionFactory extends Factory
 {
-    protected $model = Question::class;
+    protected $model = ReplyQuestion::class;
 
     /**
      * Define the model's default state.
@@ -22,8 +24,7 @@ class QuestionFactory extends Factory
         return [
 
             'user_id'       => User::first(),
-            'category_id'   => Category::first(),
-            'subject'       => fake()->word(),
+            'question_id'   => Question::first(),
             'text'          => fake()->text(),
 
         ];

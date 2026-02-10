@@ -2,16 +2,16 @@
 
 namespace Database\Seeders;
 
-use App\Models\Question;
+use App\Models\ReplyQuestion;
 use Illuminate\Database\Seeder;
 
-class QuestionSeeder extends Seeder
+class ReplyQuestionSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        Question::factory()->count(100)->create();
+        ReplyQuestion::factory()->count(100)->create();
     }
 }

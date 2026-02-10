@@ -6,9 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Question extends Model
+class ReplyQuestion extends Model
 {
     use HasFactory;
     use HasUuids;
@@ -24,8 +23,8 @@ class Question extends Model
     protected $keyType = 'string';
 
     protected $fillable = [
-        'user_id', 'category_id',
-        'subject', 'text',
+        'user_id', 'question_id',
+        'text',
     ];
 
     public function user(): BelongsTo
@@ -33,13 +32,8 @@ class Question extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function category(): BelongsTo
+    public function question(): BelongsTo
     {
-        return $this->belongsTo(Category::class);
-    }
-
-    public function replies(): HasMany
-    {
-        return $this->hasMany(ReplyQuestion::class);
+        return $this->belongsTo(Question::class);
     }
 }
