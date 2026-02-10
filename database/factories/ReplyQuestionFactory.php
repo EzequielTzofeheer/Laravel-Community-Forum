@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use App\Models\ReplyQuestion;
 use App\Models\Question;
+use App\Models\ReplyQuestion;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -23,9 +23,9 @@ class ReplyQuestionFactory extends Factory
     {
         return [
 
-            'user_id'       => User::first(),
-            'question_id'   => Question::first(),
-            'text'          => fake()->text(),
+            'user_id' => User::first(),
+            'question_id' => Question::first(),
+            'text' => fake()->text(),
 
         ];
     }
