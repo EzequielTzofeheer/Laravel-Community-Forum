@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Category extends Model
+class Question extends Model
 {
     use HasUuids;
     use HasFactory;
@@ -24,11 +24,17 @@ class Category extends Model
     protected $keyType = 'string';
 
     protected $fillable = [
-        'name', 'description',
+        'user_id', 'category_id',
+        'subject', 'text',
     ];
 
-    public function questions(): HasMany
+    public function user(): BelongsTo
     {
-        return $this->hasMany(Question::class);
+        return $this->belongsTo(User::class);
+    }
+
+    public function category(): BelongsTo
+    {
+        return $this->belongsTo(Category::class);
     }
 }
