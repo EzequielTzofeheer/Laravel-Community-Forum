@@ -44,4 +44,9 @@ class Question extends Model
     {
         return $this->hasMany(ReplyQuestion::class);
     }
+
+    public function likes()
+    {
+        return $this->belongsToMany(User::class, 'likes')->withTimestamps();
+    }
 }

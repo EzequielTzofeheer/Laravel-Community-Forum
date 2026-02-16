@@ -81,4 +81,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(ReplyQuestion::class);
     }
+
+    public function likedQuestions()
+    {
+        return $this->belongsToMany(Question::class, 'likes')->withTimestamps();
+    }
 }
