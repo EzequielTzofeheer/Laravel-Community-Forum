@@ -75,13 +75,53 @@
 
     </section> <!-- bg-white dark:bg-gray-900 pt-6 -->
 
+    <section class="bg-white dark:bg-gray-900">
+
+        <div class="px-6 mx-auto max-w-4xl">
+
+            <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-sm p-6">
+
+                <form wire:submit.prevent="store">
+
+                    @if (auth()->check())
+
+                        <div class="flex items-center gap-3 mb-4">
+                            <img class="w-10 h-10 rounded-full"
+                                 src="{{ auth()->user()->profile_photo_url }}"
+                                 alt="{{ auth()->user()->name }}">
+                        </div>
+
+                    @endif
+
+                    <textarea
+                        rows="4"
+                        placeholder="Escreva um comentário..."
+                        class="w-full bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg p-4 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-gray-300 dark:focus:ring-gray-600 transition
+                            @error('text') border-red-500 border-2 @else border-gray-300 @enderror" wire:model.defer="text"
+                    ></textarea>
+                    @error('text')<span class="text-sm text-red-600 dark:text-red-400">{{ $message }}</span>@enderror
+
+                    <div class="flex items-center justify-between mt-4">
+                        <button class="bg-gray-900 text-white px-6 py-2 rounded-lg text-sm font-medium hover:bg-gray-800 transition">
+                            Publicar
+                        </button>
+                    </div>
+
+                </form> <!-- -->
+
+            </div> <!-- bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-sm p-6 -->
+
+        </div> <!-- px-6 mx-auto max-w-4xl -->
+
+    </section> <!-- bg-white dark:bg-gray-900 -->
+
     <section class="bg-white dark:bg-gray-900 pt-6">
 
         <div class="px-6 mx-auto max-w-4xl">
 
-            @forelse($this->question->replies as $reply)
+            @forelse($replies as $reply)
 
-                <article class="space-y-6">
+                <article class="p-6">
 
                     <div class="flex items-start space-x-3">
 
@@ -104,92 +144,33 @@
                                 {{ $reply->text }}
                             </p>
 
-                            <div class="flex items-center space-x-4 mt-2 text-xs text-gray-500 dark:text-gray-400">
-                                <svg class="w-5 h-5 flex-shrink-0 like-icon transition-colors"
-                                     fill="currentColor"
-                                     viewBox="0 0 20 20">
-                                    <path d="M3 8a2 2 0 012-2h3l1-3a2 2 0 114 0l-1 3h3a2 2 0 012 2v6a2 2 0 01-2 2H7a2 2 0 01-2-2V8z"/>
-                                </svg>
-                                <span class="like-count">3</span>
-                                <button class="hover:underline">Responder</button>
-                            </div>
-
-                            <div class="flex items-start space-x-3 mt-4">
-
-                                <img class="w-7 h-7 rounded-full"
-                                     src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
-                                     alt="Jese Leos">
-
-                                <div>
-
-                                    <div class="flex items-center space-x-2">
-                                        <span class="text-[14px] font-semibold text-gray-900 dark:text-white">
-                                            Jese Leos
-                                        </span>
-                                        <span class="text-xs text-gray-500 dark:text-gray-400">
-                                            Feb. 12, 2022
-                                        </span>
-                                    </div>
-
-                                    <p class="mt-1 text-[14px] text-gray-700 dark:text-gray-300">
-                                        Much appreciated! Glad you liked it 🙂
-                                    </p>
-
-                                    <div class="flex items-center space-x-4 mt-2 text-xs text-gray-500 dark:text-gray-400">
-                                        <svg class="w-5 h-5 flex-shrink-0 like-icon transition-colors"
-                                             fill="currentColor"
-                                             viewBox="0 0 20 20">
-                                            <path d="M3 8a2 2 0 012-2h3l1-3a2 2 0 114 0l-1 3h3a2 2 0 012 2v6a2 2 0 01-2 2H7a2 2 0 01-2-2V8z"/>
-                                        </svg>
-                                        <span class="like-count">8</span>
-                                        <button class="hover:underline">Responder</button>
-                                    </div>
-
-                                </div> <!-- -->
-
-                            </div> <!-- flex items-start space-x-3 mt-4 -->
-
                         </div> <!-- flex-1 -->
 
                     </div> <!-- flex items-start space-x-3 -->
 
-                </article>  <!-- space-y-6 -->
+                </article>  <!-- p-6 -->
 
             @empty
 
                 <tr>
                     <td colspan="5" class="px-6 py-4 text-center text-gray-500 dark:text-gray-400">
-                        Nenhum registro encontrado!
+                        Nenhum comentário ainda.
                     </td>
                 </tr>
 
             @endforelse
 
-            <article class="flex items-start space-x-3 mt-8">
+            @if($replies->count() >= $perPage)
+                <div
+                    x-data
+                    x-intersect="$wire.loadMore()"
+                    class="h-10">
+                </div>
+            @endif
 
-                <img class="w-8 h-8 rounded-full"
-                     src="https://flowbite.com/docs/images/people/profile-picture-3.jpg"
-                     alt="Seu usuário">
-
-                <div class="flex-1">
-
-                    <textarea
-                        rows="3"
-                        placeholder="Escreva um comentário..."
-                        class="w-full text-[14px] p-3 border border-gray-300 rounded-xl
-                               focus:ring-2 focus:ring-blue-500 focus:outline-none
-                               dark:bg-gray-800 dark:border-gray-700 dark:text-white"
-                    ></textarea>
-
-                    <div class="flex items-center justify-between mt-4">
-                        <button class="bg-gray-900 text-white px-6 py-2 rounded-lg text-sm font-medium hover:bg-gray-800 transition">
-                            Enviar
-                        </button>
-                    </div>
-
-                </div> <!-- flex-1 -->
-
-            </article> <!-- flex items-start space-x-3 mt-8 -->
+            <div wire:loading wire:target="loadMore" class="text-center py-4">
+                <span class="text-gray-500 text-sm">Carregando mais comentários...</span>
+            </div>
 
         </div> <!-- px-6 mx-auto max-w-4xl -->
 

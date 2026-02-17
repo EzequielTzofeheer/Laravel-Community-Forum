@@ -12,9 +12,9 @@
 
                         <div class="flex items-center gap-3 mb-4">
 
-                                <img class="w-10 h-10 rounded-full"
-                                     src="{{ auth()->user()->profile_photo_url }}"
-                                     alt="{{ auth()->user()->name }}">
+                            <img class="w-10 h-10 rounded-full"
+                                 src="{{ auth()->user()->profile_photo_url }}"
+                                 alt="{{ auth()->user()->name }}">
 
                             <div class="flex-1">
                                 <input
@@ -51,7 +51,6 @@
                             @enderror
 
                         </div> <!-- mb-4 -->
-
 
                         <textarea
                             rows="4"
@@ -91,18 +90,17 @@
 
                             <div class="flex justify-between items-center mb-4 text-gray-500 text-sm">
 
-                            <span class="bg-green-200 text-green-900 text-xs font-semibold px-3 py-1 rounded-full dark:bg-neutral-900 dark:text-green-300 dark:border dark:border-neutral-700">
-                                {{ $question->category->name }}
-                            </span>
+                                <span class="bg-green-200 text-green-900 text-xs font-semibold px-3 py-1 rounded-full dark:bg-neutral-900 dark:text-green-300 dark:border dark:border-neutral-700">
+                                    {{ $question->category->name }}
+                                </span>
 
-                                <span>
-                                Publicado {{ $question->created_at->diffForHumans() }}
-                            </span>
+                                    <span>
+                                    Publicado {{ $question->created_at->diffForHumans() }}
+                                </span>
 
                             </div> <!-- flex justify-between items-center mb-4 text-gray-500 text-sm -->
 
                             <div class="flex justify-between items-center">
-
                                 <div class="flex items-center space-x-3">
                                     <img loading="lazy" class="w-8 h-8 rounded-full"
                                          src="{{ $question->user->profile_photo_url }}"
@@ -110,9 +108,9 @@
                                     <span class="font-medium dark:text-white">
                                     {{ $question->user->name }}
                                 </span>
-                                </div>
+                            </div>
 
-                            </div> <!-- flex justify-between items-center -->
+                        </div> <!-- p-6 -->
 
                             <h2 class="mb-3 text-2xl font-bold tracking-tight text-gray-900 dark:text-white pt-5">
                                 <a href="#">

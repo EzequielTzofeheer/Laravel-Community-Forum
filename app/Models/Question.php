@@ -42,7 +42,7 @@ class Question extends Model
 
     public function replies(): HasMany
     {
-        return $this->hasMany(ReplyQuestion::class);
+        return $this->hasMany(ReplyQuestion::class)->latest();
     }
 
     public function likes()
