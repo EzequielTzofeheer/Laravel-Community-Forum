@@ -9,7 +9,7 @@ use App\Livewire\{
 
 // Site - Home
 Route::get('/', SiteHomeLivewire::class)->name('site.home');
-Route::get('/{username}/{subject}', SiteQuestionLivewire::class)->name('user.post');
+Route::get('{id}/{username}/{subject}', SiteQuestionLivewire::class)->name('user.post');
 
 Route::middleware([
     'auth:sanctum',

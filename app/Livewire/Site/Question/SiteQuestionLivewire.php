@@ -9,11 +9,11 @@ use App\Http\Requests\Site\Home\StoreUpdateFormRequest;
 
 class SiteQuestionLivewire extends Component
 {
-    public Question $question;
+    public string $id;
 
-    public function mount($username)
+    public function mount($id)
     {
-        $this->question = Question::whereRelation('user', 'username', $username)
+        $this->question = Question::where('id', $id)
                                     ->withCount(['likes', 'replies'])
                                     ->with(['user', 'category', 'replies'])
                                     ->firstOrFail();

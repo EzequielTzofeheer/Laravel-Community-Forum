@@ -83,7 +83,7 @@
 
             @forelse($questions as $question)
 
-                <a href="{{ route('user.post', [$question->user->username, $question->subject]) }}">
+                <a href="{{ route('user.post', [$question->id, $question->user->username, $question->slug]) }}">
 
                     <article class="mb-8 bg-white rounded-xl border border-gray-200 shadow-sm dark:bg-gray-800 dark:border-gray-700">
 
