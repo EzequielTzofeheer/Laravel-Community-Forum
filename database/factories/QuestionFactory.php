@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use Illuminate\Support\Str;
 use App\Models\Category;
 use App\Models\Question;
 use App\Models\User;
@@ -23,10 +24,11 @@ class QuestionFactory extends Factory
     {
         return [
 
-            'user_id' => User::first(),
-            'category_id' => Category::first(),
-            'subject' => fake()->word(),
-            'text' => fake()->text(),
+            'user_id'       => User::first(),
+            'category_id'   => Category::first(),
+            'subject'       => fake()->word(),
+            'slug'          => Str::kebab(fake()->word()),
+            'text'          => fake()->text(),
 
         ];
     }

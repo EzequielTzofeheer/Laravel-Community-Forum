@@ -27,7 +27,7 @@ class Question extends Model
 
     protected $fillable = [
         'user_id', 'category_id',
-        'subject', 'text',
+        'subject', 'slug', 'text',
     ];
 
     public function user(): BelongsTo

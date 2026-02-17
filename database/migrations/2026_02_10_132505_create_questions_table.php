@@ -19,6 +19,7 @@ return new class extends Migration
             $table->uuid('category_id')->index();
 
             $table->string('subject', 200);
+            $table->string('slug');
             $table->text('text')->nullable();
 
             $table->foreign('user_id')->references('id')->on('users');
