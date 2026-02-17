@@ -31,7 +31,7 @@ class SiteHomeLivewire extends Component
     {
         return Question::latest()
                         ->with(['user', 'category', 'likes'])
-                        ->withCount('likes')
+                        ->withCount(['likes', 'replies'])
                         ->take($this->perPage)
                         ->get();
     }

@@ -151,7 +151,7 @@
                                         <svg class="w-5 h-5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                                             <path d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-3-.516L2 17l1.516-4.547A6.973 6.973 0 012 10c0-3.866 3.582-7 8-7s8 3.134 8 7z"/>
                                         </svg>
-                                        <span>{{ $question->replies->count() }}</span>
+                                        <span>{{ $question->replies_count }}</span>
                                     </div>
                                 </a>
 
