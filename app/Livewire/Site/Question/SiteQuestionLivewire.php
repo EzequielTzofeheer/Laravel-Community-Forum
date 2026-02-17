@@ -27,7 +27,7 @@ class SiteQuestionLivewire extends Component
     public function render()
     {
         return view('livewire.site.question.index')
-                ->title('Laravel Communyti Forum - Home')
+                ->title('Laravel Communyti Forum')
                 ->layout('layouts.site');
     }
 }
