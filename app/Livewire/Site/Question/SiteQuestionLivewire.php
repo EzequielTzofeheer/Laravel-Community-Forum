@@ -24,9 +24,10 @@ class SiteQuestionLivewire extends Component
 
     public function mount($id)
     {
-        $this->question = Question::with(['user'])
+        $this->question = Question::where('id', $id)
+                                    ->with(['user'])
                                     ->withCount(['likes', 'replies'])
-                                    ->firstOrFail($id);
+                                    ->firstOrFail();
     }
 
     protected function rules(): array
