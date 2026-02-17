@@ -3,11 +3,16 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Livewire\{
+
+    // Site
     Site\Home\SiteHomeLivewire,
     Site\Question\SiteQuestionLivewire,
+
+    // Panel
+    Panel\Dashboard\DashboardLivewire,
 };
 
-// Site - Home
+// Site
 Route::get('/', SiteHomeLivewire::class)->name('site.home');
 Route::get('{id}/{username}/{subject}', SiteQuestionLivewire::class)->name('user.post');
 
@@ -17,8 +22,7 @@ Route::middleware([
     'verified',
 ])->group(function () {
 
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    // Panel
+    Route::get('/dashboard', DashboardLivewire::class)->name('dashboard');
 
 });
