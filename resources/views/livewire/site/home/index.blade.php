@@ -163,11 +163,9 @@
 
             @empty
 
-                <tr>
-                    <td colspan="5" class="px-6 py-4 text-center text-gray-500 dark:text-gray-400">
-                        Nenhum registro encontrado!
-                    </td>
-                </tr>
+                <div class="text-center py-24">
+                    Nenhum comentário ainda.
+                </div>
 
             @endforelse
 
