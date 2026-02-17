@@ -44,7 +44,7 @@ class SiteQuestionLivewire extends Component
             $question = Question::where('id', $this->question->id)->firstOrFail();
 
             ReplyQuestion::create([
-                'user_id'       => $question->user_id,
+                'user_id'       => auth()->id(),
                 'question_id'   => $this->question->id,
                 'text'          => $this->text,
             ]);
@@ -53,6 +53,25 @@ class SiteQuestionLivewire extends Component
 
         } catch (\Exception $e) {
             $this->showSwalError('Falha ao inserir registro: ' . $e->getMessage());
+        }
+    }
+
+    public function toggleLike()
+    {
+        try {
+
+            if (! auth()->check()) {
+                return $this->redirectRoute('login');
+            }
+
+            $this->question->likes()->toggle(auth()->id());
+
+            $this->question->loadCount(['likes', 'replies']);
+
+            $this->question->load(['likes', 'replies']);
+
+        } catch (\Exception $e) {
+            $this->showSwalError('Ops... Algo errado: ' . $e->getMessage());
         }
     }
 
@@ -66,7 +85,7 @@ class SiteQuestionLivewire extends Component
         return view('livewire.site.question.index', [
             'replies' => $replies
         ])
-        ->title('Laravel Communyti Forum')
+        ->title($this->question->subject)
         ->layout('layouts.site');
     }
 }
