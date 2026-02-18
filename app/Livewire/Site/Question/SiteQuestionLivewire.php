@@ -79,7 +79,9 @@ class SiteQuestionLivewire extends Component
 
             $question->likes()->toggle(auth()->id());
 
-            $question->load(['likes', 'replies']);
+            $this->question->loadCount(['likes', 'replies']);
+
+            $this->question->load(['likes', 'replies']);
 
         } catch (\Exception $e) {
             $this->showSwalError('Ops... Algo errado: ' . $e->getMessage());
