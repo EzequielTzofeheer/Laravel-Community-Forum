@@ -56,15 +56,34 @@ class SiteHomeLivewire extends Component
         }
     }
 
-    public function toggleLike($questionId)
+    public function authCheck()
     {
-        if (! auth()->check()) {
-            return $this->redirectRoute('login');
+        try {
+
+            if (! auth()->check()) {
+                return $this->redirectRoute('login');
+            }
+
+        } catch (\Exception $e) {
+            $this->showSwalError('Ops... Algo errado: ' . $e->getMessage());
         }
+    }
 
-        $question = Question::where('id', $questionId)->firstOrFail();
+    public function toggleLike($id)
+    {
+        try {
 
-        $question->likes()->toggle(auth()->id());
+            $this->authCheck();
+
+            $question = Question::where('id', $id)->firstOrFail();
+
+            $question->likes()->toggle(auth()->id());
+
+            $question->load(['likes', 'replies']);
+
+        } catch (\Exception $e) {
+            $this->showSwalError('Ops... Algo errado: ' . $e->getMessage());
+        }
     }
 
     public function render()
