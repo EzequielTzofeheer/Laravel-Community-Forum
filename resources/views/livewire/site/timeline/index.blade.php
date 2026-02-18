@@ -88,7 +88,7 @@
             @empty
 
                 <div class="text-center py-24">
-                    Nenhum post ainda.
+                    Você ainda não publicou nenhum post ainda.
                 </div>
 
             @endforelse
@@ -100,7 +100,7 @@
             ></div>
 
             <div wire:loading wire:target="loadMore" class="text-center py-4">
-                <span class="text-gray-500 text-sm">Carregando mais posts...</span>
+                <span class="text-gray-500 text-sm">Carregando seus posts...</span>
             </div>
 
         </div> <!-- px-6 mx-auto max-w-4xl -->
