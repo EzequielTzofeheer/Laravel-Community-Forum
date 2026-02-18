@@ -20,6 +20,7 @@ class TimelineLivewire extends Component
     public function myQuestions()
     {
         return Question::where('user_id', auth()->id())
+                        ->latest()
                         ->withCount(['likes', 'replies'])
                         ->take($this->perPage)
                         ->get();
