@@ -56,7 +56,7 @@ class SiteQuestionLivewire extends Component
         }
     }
 
-    public function toggleLike()
+    public function authCheck()
     {
         try {
 
@@ -64,11 +64,22 @@ class SiteQuestionLivewire extends Component
                 return $this->redirectRoute('login');
             }
 
-            $this->question->likes()->toggle(auth()->id());
+        } catch (\Exception $e) {
+            $this->showSwalError('Ops... Algo errado: ' . $e->getMessage());
+        }
+    }
 
-            $this->question->loadCount(['likes', 'replies']);
+    public function toggleLike($id)
+    {
+        try {
 
-            $this->question->load(['likes', 'replies']);
+            $this->authCheck();
+
+            $question = Question::where('id', $id)->firstOrFail();
+
+            $question->likes()->toggle(auth()->id());
+
+            $question->load(['likes', 'replies']);
 
         } catch (\Exception $e) {
             $this->showSwalError('Ops... Algo errado: ' . $e->getMessage());
