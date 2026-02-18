@@ -7,6 +7,7 @@ use App\Livewire\{
     // Site
     Site\Home\SiteHomeLivewire,
     Site\Question\SiteQuestionLivewire,
+    Site\Timeline\TimelineLivewire,
 
     // Panel
     Panel\Dashboard\DashboardLivewire,
@@ -15,6 +16,7 @@ use App\Livewire\{
 // Site
 Route::get('/', SiteHomeLivewire::class)->name('site.home');
 Route::get('{id}/{username}/{subject}', SiteQuestionLivewire::class)->name('user.post');
+Route::get('/timeline', TimelineLivewire::class)->name('timeline');
 
 Route::middleware([
     'auth:sanctum',

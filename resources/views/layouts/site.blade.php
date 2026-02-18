@@ -105,24 +105,28 @@
                             </a>
                         </li>
 
-                        <li>
-                            <a href="#" class="block py-2 px-3 text-heading rounded hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-fg-brand md:p-0 md:dark:hover:bg-transparent">
-                                Timeline
-                            </a>
-                        </li>
-
                         @if (auth()->check())
+
+                            <li>
+                                <a href="{{ route('timeline') }}" class="block py-2 px-3 text-heading rounded hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-fg-brand md:p-0 md:dark:hover:bg-transparent">
+                                    Timeline
+                                </a>
+                            </li>
+
                             <li>
                                 <a href="{{ route('profile.show') }}" class="bg-gray-900 text-white px-6 py-2 rounded-lg text-sm font-medium hover:bg-gray-800 transition">
                                     Meu Perfil
                                 </a>
                             </li>
+
                         @else
+
                             <li>
                                 <a href="{{ route('login') }}" class="bg-gray-900 text-white px-6 py-2 rounded-lg text-sm font-medium hover:bg-gray-800 transition">
                                     Login/Cadastro
                                 </a>
                             </li>
+
                         @endif
 
                     </ul> <!-- flex flex-col p-4 md:p-0 mt-4 font-medium border border-default rounded-base bg-neutral-secondary-soft md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-neutral-primary -->
