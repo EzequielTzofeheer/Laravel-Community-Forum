@@ -1,0 +1,81 @@
+services:
+
+    # Image
+    app:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        restart: unless-stopped
+        working_dir: /var/www/
+        volumes:
+            - ./:/var/www
+        depends_on:
+            - redis
+        networks:
+            - Laravel-Community-Forum
+
+    # NGINX
+    nginx:
+        image: nginx:alpine
+        restart: unless-stopped
+        ports:
+            - "8096:80"
+        volumes:
+            - ./:/var/www
+            - ./docker/nginx/:/etc/nginx/conf.d/
+        networks:
+            - Laravel-Community-Forum
+
+    # DB (MySQL)
+    db:
+        image: mysql:8.0
+        platform: linux/x86_64
+        restart: unless-stopped
+        environment:
+            MYSQL_DATABASE: ${DB_DATABASE:-laravel}
+            MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-root}
+            MYSQL_PASSWORD: ${DB_PASSWORD:-userpass}
+            MYSQL_USER: ${DB_USERNAME:-username}
+        volumes:
+            - ./.docker/mysql/dbdata:/var/lib/mysql
+        ports:
+            - "3446:3306"
+        networks:
+            - Laravel-Community-Forum
+
+    # PHPMyAdmin
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        platform: linux/x86_64
+        restart: unless-stopped
+        ports:
+            - "8556:80"
+        environment:
+            PMA_HOST: db
+            PMA_PORT: 3306
+            MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-root}
+        networks:
+            - Laravel-Community-Forum
+
+    # Redis
+    redis:
+        image: redis:latest
+        networks:
+            - Laravel-Community-Forum
+
+    queue:
+      build:
+        context: .
+        dockerfile: Dockerfile
+      command: 'php artisan queue:work'
+      restart: unless-stopped
+      volumes:
+        - ./:/var/www
+      depends_on:
+        - redis
+      networks:
+        - Laravel-Community-Forum
+
+networks:
+    Laravel-Community-Forum:
+        driver: bridge

@@ -1,30 +1,44 @@
-/vendor/
-node_modules/
-npm-debug.log
-yarn-error.log
+# Logs
+*.log
 
-# Laravel 4 specific
-bootstrap/compiled.php
-app/storage/
+# OS / Editor
+.DS_Store
+Thumbs.db
 
-# Laravel 5 & Lumen specific
-public/storage
-public/hot
-
-# Laravel 5 & Lumen specific with changed public path
-public_html/storage
-public_html/hot
-
-storage/*.key
+# Environment
 .env
-Homestead.yaml
-Homestead.json
-/.vagrant
-.phpunit.result.cache
+.env.*
+!.env.example
 
-/public/build
-/storage/pail
-.env.backup
-.env.production
+# PHP / Laravel
+/vendor
+/node_modules
+/storage
+/bootstrap/cache
+.phpunit.result.cache
 .phpactor.json
-auth.json
+
+# Frontend
+/public/build
+/public/hot
+
+# Auth / Tokens
+/auth.json
+
+# IDEs
+/.idea
+/.vscode
+/.fleet
+/.nova
+/.zed
+
+# Containers / Dev tools
+/.docker
+Homestead.json
+Homestead.yaml
+
+# GitHub
+/.github
+
+# Lock files
+package-lock.json
