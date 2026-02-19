@@ -1,0 +1,104 @@
+<?php
+
+namespace App\Livewire\Site\Question;
+
+use Livewire\Component;
+
+use App\Models\Question;
+use App\Models\ReplyQuestion;
+use App\Http\Requests\Site\Question\StoreUpdateFormRequest;
+
+class SiteQuestionLivewire extends Component
+{
+    public Question $question;
+
+    public int $perPage = 5;
+    public string $text;
+
+    protected $listeners = ['loadMore'];
+
+    public function loadMore()
+    {
+        $this->perPage += 5;
+    }
+
+    public function mount($id)
+    {
+        $this->question = Question::where('id', $id)
+                                    ->with(['user'])
+                                    ->withCount(['likes', 'replies'])
+                                    ->firstOrFail();
+    }
+
+    protected function rules(): array
+    {
+        return (new StoreUpdateFormRequest())->rules();
+    }
+
+    public function store()
+    {
+        $this->validate();
+
+        try {
+
+            $question = Question::where('id', $this->question->id)->firstOrFail();
+
+            ReplyQuestion::create([
+                'user_id'       => auth()->id(),
+                'question_id'   => $this->question->id,
+                'text'          => $this->text,
+            ]);
+
+            $this->redirectRoute('user.post', [$question->id, $question->user->username, $question->slug]);
+
+        } catch (\Exception $e) {
+            $this->showSwalError('Falha ao inserir registro: ' . $e->getMessage());
+        }
+    }
+
+    public function authCheck()
+    {
+        try {
+
+            if (! auth()->check()) {
+                return $this->redirectRoute('login');
+            }
+
+        } catch (\Exception $e) {
+            $this->showSwalError('Ops... Algo errado: ' . $e->getMessage());
+        }
+    }
+
+    public function toggleLike($id)
+    {
+        try {
+
+            $this->authCheck();
+
+            $question = Question::where('id', $id)->firstOrFail();
+
+            $question->likes()->toggle(auth()->id());
+
+            $this->question->loadCount(['likes', 'replies']);
+
+            $this->question->load(['likes', 'replies']);
+
+        } catch (\Exception $e) {
+            $this->showSwalError('Ops... Algo errado: ' . $e->getMessage());
+        }
+    }
+
+    public function render()
+    {
+        $replies = $this->question->replies()
+                                    ->with('user')
+                                    ->take($this->perPage)
+                                    ->get();
+
+        return view('livewire.site.question.index', [
+            'replies' => $replies
+        ])
+        ->title($this->question->subject)
+        ->layout('layouts.site');
+    }
+}

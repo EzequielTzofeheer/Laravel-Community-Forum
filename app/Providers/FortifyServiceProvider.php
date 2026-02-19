@@ -14,8 +14,6 @@ use Illuminate\Support\Str;
 use Laravel\Fortify\Actions\RedirectIfTwoFactorAuthenticatable;
 use Laravel\Fortify\Fortify;
 
-use Illuminate\Support\Facades\Auth;
-
 class FortifyServiceProvider extends ServiceProvider
 {
     /**
